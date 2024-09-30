@@ -1,11 +1,6 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 type StockEntry = {
@@ -110,139 +105,133 @@ export default function PortfolioTracker() {
       <h1 className="text-2xl font-bold mb-4">DUP Portfolio</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Starting Amount</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Label htmlFor="startingAmount">Starting Amount</Label>
-            <Input
-              id="startingAmount"
-              type="number"
-              value={startingAmount}
-              onChange={(e) => setStartingAmount(Number(e.target.value))}
-              onBlur={updateStartingAmount}
-            />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Total P&L</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-semibold">{totalPnL.toFixed(2)}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Final Portfolio Amount</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-semibold">{finalPortfolioAmount.toFixed(2)}</p>
-            <p className="text-sm text-muted-foreground">As of {latestDate}</p>
-          </CardContent>
-        </Card>
+        <div className="border rounded p-4">
+          <h2 className="text-xl font-semibold mb-2">Starting Amount</h2>
+          <label htmlFor="startingAmount" className="block mb-1">Starting Amount</label>
+          <input
+            id="startingAmount"
+            type="number"
+            value={startingAmount}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStartingAmount(Number(e.target.value))}
+            onBlur={updateStartingAmount}
+            className="w-full p-2 border rounded"
+          />
+        </div>
+        <div className="border rounded p-4">
+          <h2 className="text-xl font-semibold mb-2">Total P&L</h2>
+          <p className="text-2xl font-semibold">{totalPnL.toFixed(2)}</p>
+        </div>
+        <div className="border rounded p-4">
+          <h2 className="text-xl font-semibold mb-2">Final Portfolio Amount</h2>
+          <p className="text-2xl font-semibold">{finalPortfolioAmount.toFixed(2)}</p>
+          <p className="text-sm text-gray-600">As of {latestDate}</p>
+        </div>
       </div>
 
       <div className="mb-4">
         <h2 className="text-xl font-semibold mb-2">Add New Entry</h2>
         <div className="grid grid-cols-5 gap-2">
           <div>
-            <Label htmlFor="date">Date</Label>
-            <Input
+            <label htmlFor="date" className="block mb-1">Date</label>
+            <input
               id="date"
               type="date"
               value={newEntry.date}
-              onChange={(e) => setNewEntry({ ...newEntry, date: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewEntry({ ...newEntry, date: e.target.value })}
+              className="w-full p-2 border rounded"
             />
           </div>
           <div>
-            <Label htmlFor="stock">Stock</Label>
-            <Input
+            <label htmlFor="stock" className="block mb-1">Stock</label>
+            <input
               id="stock"
               type="text"
               value={newEntry.stock}
-              onChange={(e) => setNewEntry({ ...newEntry, stock: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewEntry({ ...newEntry, stock: e.target.value })}
+              className="w-full p-2 border rounded"
             />
           </div>
           <div>
-            <Label htmlFor="quantity">Quantity</Label>
-            <Input
+            <label htmlFor="quantity" className="block mb-1">Quantity</label>
+            <input
               id="quantity"
               type="number"
               value={newEntry.quantity}
-              onChange={(e) => setNewEntry({ ...newEntry, quantity: Number(e.target.value) })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewEntry({ ...newEntry, quantity: Number(e.target.value) })}
+              className="w-full p-2 border rounded"
             />
           </div>
           <div>
-            <Label htmlFor="buyingPrice">Buying Price</Label>
-            <Input
+            <label htmlFor="buyingPrice" className="block mb-1">Buying Price</label>
+            <input
               id="buyingPrice"
               type="number"
               value={newEntry.buyingPrice}
-              onChange={(e) => setNewEntry({ ...newEntry, buyingPrice: Number(e.target.value) })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewEntry({ ...newEntry, buyingPrice: Number(e.target.value) })}
+              className="w-full p-2 border rounded"
             />
           </div>
           <div>
-            <Label htmlFor="currentPrice">Current Price</Label>
-            <Input
+            <label htmlFor="currentPrice" className="block mb-1">Current Price</label>
+            <input
               id="currentPrice"
               type="number"
               value={newEntry.currentPrice}
-              onChange={(e) => setNewEntry({ ...newEntry, currentPrice: Number(e.target.value) })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewEntry({ ...newEntry, currentPrice: Number(e.target.value) })}
+              className="w-full p-2 border rounded"
             />
           </div>
         </div>
-        <Button onClick={addEntry} className="mt-2">Add Entry</Button>
+        <button onClick={addEntry} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Add Entry</button>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Date</TableHead>
-            <TableHead>Stock</TableHead>
-            <TableHead>Quantity</TableHead>
-            <TableHead>Buying Price</TableHead>
-            <TableHead>Current Price</TableHead>
-            <TableHead>Total Invested</TableHead>
-            <TableHead>Total Current</TableHead>
-            <TableHead>P&L</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
+      <table className="w-full border-collapse border">
+        <thead>
+          <tr>
+            <th className="border p-2">Date</th>
+            <th className="border p-2">Stock</th>
+            <th className="border p-2">Quantity</th>
+            <th className="border p-2">Buying Price</th>
+            <th className="border p-2">Current Price</th>
+            <th className="border p-2">Total Invested</th>
+            <th className="border p-2">Total Current</th>
+            <th className="border p-2">P&L</th>
+          </tr>
+        </thead>
+        <tbody>
           {sortedEntries.map((entry) => (
-            <TableRow key={entry._id}>
-              <TableCell>{entry.date}</TableCell>
-              <TableCell>{entry.stock}</TableCell>
-              <TableCell>{entry.quantity}</TableCell>
-              <TableCell>{entry.buyingPrice.toFixed(2)}</TableCell>
-              <TableCell>{entry.currentPrice.toFixed(2)}</TableCell>
-              <TableCell>{entry.totalInvested.toFixed(2)}</TableCell>
-              <TableCell>{entry.totalCurrent.toFixed(2)}</TableCell>
-              <TableCell>{entry.pnl.toFixed(2)}</TableCell>
-            </TableRow>
+            <tr key={entry._id}>
+              <td className="border p-2">{entry.date}</td>
+              <td className="border p-2">{entry.stock}</td>
+              <td className="border p-2">{entry.quantity}</td>
+              <td className="border p-2">{entry.buyingPrice.toFixed(2)}</td>
+              <td className="border p-2">{entry.currentPrice.toFixed(2)}</td>
+              <td className="border p-2">{entry.totalInvested.toFixed(2)}</td>
+              <td className="border p-2">{entry.totalCurrent.toFixed(2)}</td>
+              <td className="border p-2">{entry.pnl.toFixed(2)}</td>
+            </tr>
           ))}
-        </TableBody>
-      </Table>
+        </tbody>
+      </table>
 
       <div className="mt-4">
         <h2 className="text-xl font-semibold mb-2">Datewise P&L Summary</h2>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Date</TableHead>
-              <TableHead>Total P&L</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
+        <table className="w-full border-collapse border">
+          <thead>
+            <tr>
+              <th className="border p-2">Date</th>
+              <th className="border p-2">Total P&L</th>
+            </tr>
+          </thead>
+          <tbody>
             {chartData.map(({ date, pnl }) => (
-              <TableRow key={date}>
-                <TableCell>{date}</TableCell>
-                <TableCell>{pnl.toFixed(2)}</TableCell>
-              </TableRow>
+              <tr key={date}>
+                <td className="border p-2">{date}</td>
+                <td className="border p-2">{pnl.toFixed(2)}</td>
+              </tr>
             ))}
-          </TableBody>
-        </Table>
+          </tbody>
+        </table>
       </div>
 
       <div className="mt-8 h-64">
